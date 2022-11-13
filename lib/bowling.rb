@@ -1,41 +1,30 @@
 class Bowling
   def initialize
-    @rolls = []
-    @roll_number = 1
     @score = []
+    @strike = false
+    @spare = false
   end
 
-  def frame(pins)
-    @rolls << pins
-
-    if pins.include?(10)
-      @roll_number += 1
-      if strikescore != nil
-        @score << strikescore
+  def total(frame)
+    frame.each do |frame|
+      if frame[0] == 10 || frame[1] == 10 # Strike
+        @score << frame # + next frame.sum
+        @strike = true
+      elsif @strike == true
+        @score << frame * 2
+      elsif frame.sum == 10 # Spare
+        @spare == true
+        @score << frame  # + next frame[0]
+      elsif @spare == true
+        @score << frame[0]
+      else 
+        @score << frame 
       end
-    elsif pins.sum == 10
-      @roll_number += 1
-      @score << sparescore
-    else
-      @score << pins
-      @roll_number += 1
-      @roll_number
     end
+    return @score.flatten.sum
   end
 
-  def sparescore
-    return 16 
-    # plus score from next first roll of frame
-  end
+  def strike
 
-  def strikescore
-    if @rolls.length == 10 && @rolls.flatten.sum == 100
-      return 300
-    end
-    # plus score from first and second roll of next frame
-  end
-
-  def current_score
-    @score.flatten.sum
   end
 end

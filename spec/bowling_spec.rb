@@ -1,65 +1,67 @@
 require 'bowling'
 
 RSpec.describe 'bowling scorecard' do
-  before (:each) do
-    @bowling = Bowling.new
-  end
 
   context 'no spare or strikes' do
-    it 'returns a score of 6' do
-      @bowling = Bowling.new
-      10.times {@bowling.frame([3, 3])}
-      expect(@bowling.current_score).to eq 60
+    it 'returns a score of 6 for a single frame' do
+      bowling = Bowling.new
+      expect(bowling.total([[3, 3]])).to eq 6
     end
 
     it 'returns a score of 0' do
-      @bowling = Bowling.new
-      10.times {@bowling.frame([0, 0])}
-      expect(@bowling.current_score).to eq 0
+      bowling = Bowling.new
+      expect(bowling.total([[0, 0]])).to eq 0
     end
 
-    it 'returns a score of 18' do
-      @bowling = Bowling.new
-      5.times {@bowling.frame([3, 6])}
-      5.times {@bowling.frame([7, 1])}
-      expect(@bowling.current_score).to eq 85
-    end
-
-    it 'returns a score of 60' do
-      @bowling = Bowling.new
-      10.times {@bowling.frame([0, 6])}
-      expect(@bowling.current_score).to eq 60
+    it 'returns a score of 24 after 6 frames' do
+      bowling = Bowling.new
+      expect(bowling.total([[2, 6], [3, 4], [7, 2]])).to eq 24
     end
   end
 
   context 'score of 0 in all frames' do  
     it 'returns a score of 0 if no pins are knocked down in 10 frames' do
-      @bowling = Bowling.new
-      10.times {@bowling.frame([0, 0])}
-      expect(@bowling.current_score).to eq 0
+      bowling = Bowling.new
+      expect(bowling.total([[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]])).to eq 0
     end
   end
 
   context 'when there is a strike' do
+    it 'returns a perfect score if a strike is scored in one frame' do
+      bowling = Bowling.new
+      expect(bowling.total([[10, 0]])).to eq 10
+    end
+
+    it 'returns a the correct score if a strike is scored in the 1st frame' do
+      bowling = Bowling.new
+      expect(bowling.total([[10, 0], [2, 5]])).to eq 24
+    end
+
+    it 'returns a the correct score if a strike is scored in the 2nd frame' do
+      bowling = Bowling.new
+      expect(bowling.total([[6, 3], [0, 10], [9, 0]])).to eq 37
+    end
+
+    it 'returns a the correct score if a strike is scored in the 2 consecutive frames frame' do
+      bowling = Bowling.new
+      expect(bowling.total([[0, 10], [10, 0]])).to eq 30
+    end
+
     it 'returns a perfect score if a strike is scored in each frame' do
-      @bowling = Bowling.new
-      10.times {@bowling.frame([10])}
-      expect(@bowling.current_score).to eq 300
+      bowling = Bowling.new
+      expect(bowling.total([[10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0]])).to eq 300
     end
   end
 
   context 'when there is a spare' do
     it 'returns a spare' do
-      @bowling = Bowling.new
-      2.times {@bowling.frame([6, 4])}
-      expect(@bowling.sparescore).to eq 16
+      bowling = Bowling.new
+      expect(bowling.total([[6,4]])).to eq 10
     end
 
-    xit 'scores a spare' do
-      @bowling = Bowling.new
-      @bowling.frame([6, 4])
-      @bowling.frame([2, 3])
-      expect(@bowling.sparescore).to eq 12
+    it 'scores a spare' do
+      bowling = Bowling.new
+      expect(bowling.total([[6,4], [5, 2]])).to eq 22
     end
   end
 end
