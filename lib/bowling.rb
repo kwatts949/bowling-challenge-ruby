@@ -1,21 +1,23 @@
-def initialize
-  @frame = 1
-  @roll = 1
-  @pins = 0
+class Bowling
+  def initialize
+    @score = []
+    @frame = 1
+  end
+
+  def frame(first, second)
+    if first == 10
+      strike
+    elsif first + second == 10
+      spare
+    else
+      @score << first
+      @score << second
+    end
+  end
+
+  def current_score
+    @score.sum
+  end
 end
 
-def run
-  print_header
-  enter_score
-end
 
-def print_header
-  puts 'Welcome to the bowling scorecard program!'
-end
-
-def enter_score
-  puts 'Please enter the number of pins knocked down'
-  @pins = user.gets.chomp
-end
-
-run
