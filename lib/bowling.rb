@@ -23,8 +23,4 @@ class Bowling
     end
     return @score.flatten.sum
   end
-
-  def strike
-
-  end
 end
