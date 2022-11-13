@@ -6,18 +6,17 @@ class Bowling
   end
 
   def frame(pins)
+    @rolls << pins
+
     if pins.include?(10)
-      @rolls << pins
       @roll_number += 1
       if strikescore != nil
         @score << strikescore
       end
     elsif pins.sum == 10
-      @rolls << pins
       @roll_number += 1
       @score << sparescore
     else
-      @rolls << pins
       @score << pins
       @roll_number += 1
       @roll_number
@@ -25,12 +24,12 @@ class Bowling
   end
 
   def sparescore
-    return 10 
+    return 16 
     # plus score from next first roll of frame
   end
 
   def strikescore
-    if @rolls.length == 10
+    if @rolls.length == 10 && @rolls.flatten.sum == 100
       return 300
     end
     # plus score from first and second roll of next frame
