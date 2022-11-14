@@ -15,14 +15,14 @@ class BowlingNew
       while frame_number != 10 do
         @current_frame = frames[frame_number]
         if @strike && current_strike
-          @score << strike_score
+          strike_score
         elsif @strike
-          @score << strike_score
+          strike_score
           @strike = false
         elsif @spare && current_spare
-          @score << spare_score
+          spare_score
         elsif @spare
-          @score << spare_score
+          spare_score
           @spare = false
         elsif current_strike
           @strike = true
@@ -54,10 +54,10 @@ class BowlingNew
   end
 
   def spare_score
-    (@current_frame.sum) + @current_frame[0]
+    @score << (@current_frame.sum) + @current_frame[0]
   end
 
   def strike_score
-    @current_frame.sum * 2
+    @score << @current_frame.sum * 2
   end
 end
