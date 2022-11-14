@@ -14,7 +14,6 @@ class BowlingNew
     else
       while frame_number != 10 do
         @current_frame = frames[frame_number]
-
         if @strike && current_strike
           @score << strike_score
         elsif @strike
