@@ -11,10 +11,8 @@ class BowlingNew
     if frames.length == 10 && frames.flatten.sum == 100
       @score << 300
       return @score.sum # Score for perfect game
-
     else
       while frame_number != 10 do
-
         @current_frame = frames[frame_number]
 
         if @strike && current_strike
