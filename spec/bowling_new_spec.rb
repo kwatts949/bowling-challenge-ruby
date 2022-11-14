@@ -17,7 +17,7 @@ RSpec.describe 'bowling scorecard' do
   end
 
   context 'with consecutive spares' do
-    it 'returns a correct score for 10 frames with 2 consecutive frames' do
+    it 'returns a correct score for 10 frames with 2 consecutive spares' do
       bowling = BowlingNew.new
       expect(bowling.score([[1, 4], [4, 5],[6, 4], [6, 4], [9, 0], [1, 4], [4, 5],[3, 4], [5, 4], [9, 0]])).to eq 97
     end
@@ -41,7 +41,19 @@ RSpec.describe 'bowling scorecard' do
 
     it 'returns a correct score for 10 frames with 2 consecutive strikes' do
       bowling = BowlingNew.new
-      expect(bowling.score([[1, 4], [4, 5],[10, 0], [10, 0], [9, 0], [1, 4], [4, 5],[3, 4], [8, 1], [9, 0]])).to eq 111
+      expect(bowling.score([[1, 4], [4, 5],[10, 0], [10, 0], [9, 0], [1, 4], [4, 5],[3, 4], [8, 1], [9, 0]])).to eq 101
+    end
+  end
+
+  it 'returns a correct score for 10 frames with 3 consecutive strikes' do
+      bowling = BowlingNew.new
+      expect(bowling.score([[1, 4], [4, 5],[10, 0], [10, 0], [10, 0], [1, 4], [4, 5],[3, 4], [8, 1], [9, 0]])).to eq 108
+  end
+
+  context 'with strikes and spares' do
+    it 'returns a correct score for 10 frames' do
+      bowling = BowlingNew.new
+      expect(bowling.score([[10, 0], [3, 1],[4, 0], [5, 5], [6, 3], [5, 1], [9, 0], [8, 1], [2, 3], [4, 2]])).to eq 82
     end
   end
 
